@@ -1,11 +1,8 @@
 #include "fatigue_calc.h"
 
-// Calculate how much the force has dropped compared to the max
-float calculateFatigue( float currentForce, float maxFOrce) {
-
-// TODO: Calculate the percentage drop:
-// ((maxForce - currentForce) / maxForce) * 100
-// TODO: Make sure result is no negative (return 0 if it is)
-return 0; // Placeholder
-
+float calculateFatigue(float current, float max) {
+    if (max == 0) return 0;
+    float drop = ((max - current) /max ) * 100.0;
+    return (drop < 0) ? 0 : drop;
+    // If drop < 0, return 0. Otherwise, return drop.
 }
