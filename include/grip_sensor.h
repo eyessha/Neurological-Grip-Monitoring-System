@@ -1,18 +1,6 @@
 #pragma once
 
-// Purpose: This file handles the grip strength test
-// - Setup code for grip sensor
-// - Reads force values
-// - Runs the test and calculates fatigue
-
-// TODO: Set up ADC resolution and pinMode for grip sensor
-void initGripSensor();
-
-// TODO: Read and return raw or scaled grip force value
-float readGripForce();
-
-// TODO: Run grip test loop:
-// - Record force over time
-// - Find maximum force
-// - Calculate fatigue %
-void runGripTest();
+// HX711 load cell setup + test runner fro grip strength 
+void initGripSensor();      // Setup the load cell (pins, tare)
+float readGripForce();      // Return curreny grip force (raw or scaled)
+void runGripTest();         // RUN 10-second grip test with fatigue ouput

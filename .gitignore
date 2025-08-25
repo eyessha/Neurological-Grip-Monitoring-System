@@ -1,0 +1,13 @@
+# PlatformIO build output
+.pio/
+.vscode/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Compiled binaries
+*.elf
+*.bin
+*.hex
+
