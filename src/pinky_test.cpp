@@ -1,16 +1,52 @@
 #include "pinky_test.h"
+#include "fatigue_calc.h"
+#include <HX711.h>
 
-// Sets up the pinky sensor (ADC resolution, pin setup, etc.)
-void initPinkySensor(){
-    // TODO: Set ananlogReadResolution (if using FSR or load cell)
-    // TODO: Set pinMOde for pinky sensor pin (e.g., A1) if needed
+#define PINKY_DOUT 2    // HX711 data pin for pinky sensoe 
+#define PINKY_SCK 3     // HX711 clock pin for pinky sensor 
+
+HX711 pinkyScale;
+
+void initPinkySensor() {
+    pinkyScale.begin(PINKY_DOUT, PINKY_SCK);
+    pinkyScale.set_scale();                     // Set after calibration
+    pinkyScale.tare();                          // Set baseline
+
 }
 
-// Runs the pinky abduction test
+float readPinkyForce() {
+    if(pinkyScale.is_ready()) {
+        return pinkyScale.get_units(1);         // Read one sample
+    } else {
+        return 0;
+    }
+}
+
 void runPinkyTest() {
-    // TODO: Start a timer (e.g., store millis() as start time)
-    // TODO: Continuosly read pinky force vallue in loop
-    // TODO: Track and update the max pinky force seen so far
-    // TODO: Stop the test after a fixed time (e.g., 10 seconds)
-    // TODO: Print or store the max value recorded
+    unsigned long start = millis();
+    unsigned long duration = 10000;
+
+    float maxForce = 0;
+    float currentForce = 0;
+
+    while (millis() - start < duration) {
+        currentForce = readPinkyForce();
+        if(currentForce > maxForce) maxForce = currentForce;
+
+        float fatigue = calculateFatigue(currentForce, maxForce);
+
+        Serial.print("Pinky Current: ");
+        Serial.print(currentForce);
+        Serial.print(" | Max: ");
+        Serial.print(maxForce);
+        Serial.print(" | Fatigue: ");
+        Serial.print(fatigue);
+        Serial.println(" %");
+
+        delay(100);
+    }
+
+    Serial.println("Pinky test complete.");
+    Serial.print("Final Max Pinky Force: ");
+    Serial.println(maxForce);
 }
