@@ -1,24 +1,24 @@
 #include "grip_sensor.h"
-#include <HX711.h> // HX711 library 
+#include "fatigue_calc.h"
+#include <HX711.h> 
 
-// Sets up the grip sensor (ADC pin, resolution )
+#define GRIP_DOUT 0     // HX711 data pin
+#define GRIP_SCK  1     // HX711 clock pin 
+
+HX711 gripScale;
+
+
 void initGripSensor() {
-    // TOFO: Set up ADC resolution 
-    // TODO: Set up the analog pin mode (if needed)
+    // Connect HX711
+    // Set after calibration 
+    // Set zero refrence 
 }
 
-// Reads the current grip force value
-float readGripForce() {
-    // TODO: Read analog input 
-    // TODO: Convert to force (optional)
-    return 0;
+float readGripForce(){
+    // Read one averaged value 
+    // If not ready, return 0
 }
 
-// Handles the first full grip test loop
 void runGripTest() {
-    // TODO: Start timer 
-    // TODO: Read and log force values 
-    // TODO: Track max force 
-    // TODO: Calculate fatigue 
-    // TODO: ENd after 10s (or button)
+    
 }
